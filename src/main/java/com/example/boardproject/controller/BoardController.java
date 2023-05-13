@@ -20,5 +20,9 @@ public class BoardController {
         return new BoardResponseDto(board);
 
     }
+    @GetMapping("/{id}")
+    public Board boardRead(@PathVariable Long id) {
+        return boardService.find(id);
+    }
 
 }

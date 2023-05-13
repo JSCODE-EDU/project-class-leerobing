@@ -6,6 +6,9 @@ import com.example.boardproject.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,10 @@ public class BoardService {
 
         boardRepository.save(board);
         return board;
+    }
 
+    public Board find(Long id) {
+        return boardRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("존재하지 않는 게시물입니다."));
     }
 }
