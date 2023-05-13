@@ -26,7 +26,10 @@ public class Board {
     public  Board(String title, String content) {
         this.title = title;
         this.content = content;
-
     }
 
+    public void modify(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
