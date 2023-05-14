@@ -43,8 +43,13 @@ public class BoardService {
     @Transactional
     public Board modify(Long id, BoardRequestDto boardRequestDto) {
         Board board = boardRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("존재하지 않는 게시물입니다."));
-        board.modify(boardRequestDto.getTitle(),boardRequestDto.getContent());
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다."));
+        board.modify(boardRequestDto.getTitle(), boardRequestDto.getContent());
         return board;
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
     }
 }
