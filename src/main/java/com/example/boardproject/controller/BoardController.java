@@ -7,6 +7,8 @@ import com.example.boardproject.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/board")
 @RequiredArgsConstructor
@@ -23,6 +25,17 @@ public class BoardController {
     @GetMapping("/{id}")
     public Board boardRead(@PathVariable Long id) {
         return boardService.find(id);
+    }
+
+    @GetMapping("/find-all")
+    public List<Board> boardReadAll() {
+        return boardService.findAll();
+    }
+
+    @PatchMapping("/{id}")
+    public BoardResponseDto boardModify(@PathVariable("id") Long id, @RequestBody BoardRequestDto boardRequestDto) {
+        Board board = boardService.modify(id,boardRequestDto);
+        return new BoardResponseDto(board);
     }
 
 }
