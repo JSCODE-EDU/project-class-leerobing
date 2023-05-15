@@ -19,11 +19,7 @@ public class BoardResponseDto {
     }
 
     public static BoardResponseDto from(Board board) {
-        return BoardResponseDto.builder()
-                .id(board.getId())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .build();
+        return new BoardResponseDto(board.getId(),board.getTitle(),board.getContent());
     }
 
 }
