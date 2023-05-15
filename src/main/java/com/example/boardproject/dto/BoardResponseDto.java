@@ -1,6 +1,7 @@
 package com.example.boardproject.dto;
 
 import com.example.boardproject.domain.Board;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -10,6 +11,7 @@ public class BoardResponseDto {
     private String title;
     private String content;
 
+    @Builder
     private BoardResponseDto(Long id, String title, String content) {
         this.id = id;
         this.title = title;
@@ -17,12 +19,11 @@ public class BoardResponseDto {
     }
 
     public static BoardResponseDto from(Board board) {
-        return new BoardResponseDto(board.getId(),board.getTitle(),board.getContent());
+        return BoardResponseDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .build();
     }
 
-    public BoardResponseDto(Board board) {
-        this.id = board.getId();
-        this.title = board.getTitle();
-        this.content = board.getContent();
-    }
 }
