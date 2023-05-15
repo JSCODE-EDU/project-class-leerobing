@@ -19,7 +19,7 @@ public class BoardController {
     @PostMapping("/write")
     public BoardResponseDto boardWrite(@RequestBody BoardRequestDto boardRequestDto) {
         Board board = boardService.write(boardRequestDto);
-        return new BoardResponseDto(board);
+        return BoardResponseDto.from(board);
 
     }
     @GetMapping("/{id}")
@@ -35,7 +35,7 @@ public class BoardController {
     @PatchMapping("/{id}")
     public BoardResponseDto boardModify(@PathVariable("id") Long id, @RequestBody BoardRequestDto boardRequestDto) {
         Board board = boardService.modify(id,boardRequestDto);
-        return new BoardResponseDto(board);
+        return BoardResponseDto.from(board);
     }
 
     @DeleteMapping("/{id}")

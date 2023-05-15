@@ -10,6 +10,16 @@ public class BoardResponseDto {
     private String title;
     private String content;
 
+    private BoardResponseDto(Long id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
+
+    public static BoardResponseDto from(Board board) {
+        return new BoardResponseDto(board.getId(),board.getTitle(),board.getContent());
+    }
+
     public BoardResponseDto(Board board) {
         this.id = board.getId();
         this.title = board.getTitle();
