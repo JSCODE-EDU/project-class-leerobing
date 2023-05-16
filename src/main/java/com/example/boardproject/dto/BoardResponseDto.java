@@ -4,6 +4,8 @@ import com.example.boardproject.domain.Board;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class BoardResponseDto {
 
@@ -21,5 +23,6 @@ public class BoardResponseDto {
     public static BoardResponseDto from(Board board) {
         return new BoardResponseDto(board.getId(),board.getTitle(),board.getContent());
     }
+
 
 }

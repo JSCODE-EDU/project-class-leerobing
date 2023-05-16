@@ -4,12 +4,12 @@ import com.example.boardproject.domain.Board;
 import com.example.boardproject.dto.BoardRequestDto;
 import com.example.boardproject.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -21,10 +21,10 @@ public class BoardService {
     @Transactional
     public Board write(BoardRequestDto boardRequestDto) {
 
-        Board board = Board.builder()
-                .title(boardRequestDto.getTitle())
-                .content(boardRequestDto.getContent())
-                .build();
+            Board board = Board.builder()
+                    .title(boardRequestDto.getTitle())
+                    .content(boardRequestDto.getContent())
+                    .build();
 
         boardRepository.save(board);
         return board;
@@ -35,10 +35,18 @@ public class BoardService {
                 .orElseThrow(()-> new IllegalArgumentException("존재하지 않는 게시물입니다."));
     }
 
+
     public List<Board> findAll() {
-        return boardRepository.findAll();
+        PageRequest pageRequest =
+                PageRequest.of(0, 100, Sort.by(Sort.Direction.DESC,("createdDate")));
+        return boardRepository.findFirst100ByBoard(pageRequest);
     }
 
+    public List<Board> searchFind(String keyword) {
+        PageRequest pageRequest =
+                PageRequest.of(0,100,Sort.by(Sort.Direction.DESC,("createdDate")));
+        return boardRepository.findByTitleKeyword(keyword, pageRequest);
+    }
 
     @Transactional
     public Board modify(Long id, BoardRequestDto boardRequestDto) {
@@ -52,4 +60,5 @@ public class BoardService {
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
+
 }

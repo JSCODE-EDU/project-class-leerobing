@@ -5,6 +5,10 @@ import com.example.boardproject.dto.BoardRequestDto;
 import com.example.boardproject.dto.BoardResponseDto;
 import com.example.boardproject.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +36,11 @@ public class BoardController {
         return boardService.findAll();
     }
 
+    @GetMapping()
+    public List<Board> search(@RequestParam("keyword") String keyword) {
+        return boardService.searchFind(keyword);
+    }
+
     @PatchMapping("/{id}")
     public BoardResponseDto boardModify(@PathVariable("id") Long id, @RequestBody BoardRequestDto boardRequestDto) {
         Board board = boardService.modify(id,boardRequestDto);
@@ -43,5 +52,6 @@ public class BoardController {
         boardService.delete(id);
         return "ok";
     }
+
 
 }
