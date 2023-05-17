@@ -3,14 +3,18 @@ package com.example.boardproject.controller;
 import com.example.boardproject.domain.Board;
 import com.example.boardproject.dto.BoardRequestDto;
 import com.example.boardproject.dto.BoardResponseDto;
+import com.example.boardproject.dto.ModifyRequestDto;
+import com.example.boardproject.dto.SaveRequestDto;
 import com.example.boardproject.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,8 +25,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping("/write")
-    public BoardResponseDto boardWrite(@RequestBody BoardRequestDto boardRequestDto) {
-        Board board = boardService.write(boardRequestDto);
+    public BoardResponseDto boardWrite(@RequestBody @Valid SaveRequestDto saveRequestDto) {
+        Board board = boardService.write(saveRequestDto);
         return BoardResponseDto.from(board);
 
     }
@@ -42,8 +46,9 @@ public class BoardController {
     }
 
     @PatchMapping("/{id}")
-    public BoardResponseDto boardModify(@PathVariable("id") Long id, @RequestBody BoardRequestDto boardRequestDto) {
-        Board board = boardService.modify(id,boardRequestDto);
+    public BoardResponseDto boardModify(@PathVariable("id") Long id,
+                                        @RequestBody @Valid ModifyRequestDto modifyRequestDto) {
+        Board board = boardService.modify(id,modifyRequestDto);
         return BoardResponseDto.from(board);
     }
 
@@ -53,5 +58,9 @@ public class BoardController {
         return "ok";
     }
 
+    @ExceptionHandler(Exception.class)
+    public Object exception(Exception e) {
+        return e.getMessage();
+    }
 
 }
