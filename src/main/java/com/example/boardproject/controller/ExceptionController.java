@@ -20,4 +20,5 @@ public class ExceptionController {
     private CommonResponse inValidateBoardException(InvalidateBoardException e) {
         return responseService.getErrorResponse(Exception.INVALIDATE_BOARD.getCode(), Exception.INVALIDATE_BOARD.getMessage());
     }
+
 }

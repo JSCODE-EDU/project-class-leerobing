@@ -24,12 +24,8 @@ public class ResponseService {
     }
 
     public CommonResponse getErrorResponse(int code, String message) {
-        CommonResponse commonResponse = new CommonResponse();
-        commonResponse.success = false;
-        commonResponse.code = code;
-        commonResponse.message = message;
+        return CommonResponse.of(false,code,message);
 
-        return commonResponse;
     }
 
     void setSuccessResponse(CommonResponse commonResponse) {
