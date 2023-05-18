@@ -4,6 +4,7 @@ import com.example.boardproject.domain.Board;
 import com.example.boardproject.dto.BoardRequestDto;
 import com.example.boardproject.dto.ModifyRequestDto;
 import com.example.boardproject.dto.SaveRequestDto;
+import com.example.boardproject.exception.InvalidateBoardException;
 import com.example.boardproject.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -32,9 +33,9 @@ public class BoardService {
     }
 
     @Transactional
-    public Board find(Long id) {
+    public Board find(Long id) throws InvalidateBoardException {
         return boardRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("존재하지 않는 게시물입니다."));
+                .orElseThrow(()-> new InvalidateBoardException());
     }
 
     @Transactional
@@ -52,17 +53,17 @@ public class BoardService {
     }
 
     @Transactional
-    public Board modify(Long id, ModifyRequestDto modifyRequestDto) {
+    public Board modify(Long id, ModifyRequestDto modifyRequestDto) throws InvalidateBoardException {
         Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다."));
+                .orElseThrow(() -> new InvalidateBoardException());
         board.modify(modifyRequestDto.getTitle(), modifyRequestDto.getContent());
         return board;
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id) throws InvalidateBoardException {
         Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다."));
+                .orElseThrow(() -> new InvalidateBoardException());
         boardRepository.deleteById(id);
     }
 
