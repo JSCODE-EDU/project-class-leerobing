@@ -5,11 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Board {
+public class Board extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +22,15 @@ public class Board {
     @Column(columnDefinition = "TEXT",nullable = false)
     private String content;
 
+    private LocalDateTime createdDate;
+
 
     @Builder
-    public  Board(String title, String content) {
+    public  Board(String title, String content,LocalDateTime createdDate) {
         this.title = title;
         this.content = content;
+        this.createdDate = LocalDateTime.now();
+
     }
 
     public void modify(String title, String content) {

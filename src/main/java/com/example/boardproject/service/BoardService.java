@@ -2,14 +2,17 @@ package com.example.boardproject.service;
 
 import com.example.boardproject.domain.Board;
 import com.example.boardproject.dto.BoardRequestDto;
+import com.example.boardproject.dto.ModifyRequestDto;
+import com.example.boardproject.dto.SaveRequestDto;
+import com.example.boardproject.exception.InvalidateBoardException;
 import com.example.boardproject.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -19,37 +22,49 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     @Transactional
-    public Board write(BoardRequestDto boardRequestDto) {
+    public Board write(SaveRequestDto saveRequestDto) {
 
-        Board board = Board.builder()
-                .title(boardRequestDto.getTitle())
-                .content(boardRequestDto.getContent())
-                .build();
-
+            Board board = Board.builder()
+                    .title(saveRequestDto.getTitle())
+                    .content(saveRequestDto.getContent())
+                    .build();
         boardRepository.save(board);
         return board;
     }
 
-    public Board find(Long id) {
+    @Transactional
+    public Board find(Long id) throws InvalidateBoardException {
         return boardRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("존재하지 않는 게시물입니다."));
+                .orElseThrow(()-> new InvalidateBoardException());
     }
-
-    public List<Board> findAll() {
-        return boardRepository.findAll();
-    }
-
 
     @Transactional
-    public Board modify(Long id, BoardRequestDto boardRequestDto) {
+    public List<Board> findAll() {
+        PageRequest pageRequest =
+                PageRequest.of(0, 100, Sort.by(Sort.Direction.DESC,("createdDate")));
+        return boardRepository.findFirst100ByBoard(pageRequest);
+    }
+
+    @Transactional
+    public List<Board> searchFind(String keyword) {
+        PageRequest pageRequest =
+                PageRequest.of(0,100,Sort.by(Sort.Direction.DESC,("createdDate")));
+        return boardRepository.findByTitleKeyword(keyword, pageRequest);
+    }
+
+    @Transactional
+    public Board modify(Long id, ModifyRequestDto modifyRequestDto) throws InvalidateBoardException {
         Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시물입니다."));
-        board.modify(boardRequestDto.getTitle(), boardRequestDto.getContent());
+                .orElseThrow(() -> new InvalidateBoardException());
+        board.modify(modifyRequestDto.getTitle(), modifyRequestDto.getContent());
         return board;
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id) throws InvalidateBoardException {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new InvalidateBoardException());
         boardRepository.deleteById(id);
     }
+
 }
