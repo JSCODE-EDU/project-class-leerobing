@@ -27,16 +27,14 @@ public class BoardController {
     private final ResponseService responseService;
 
     @PostMapping("/write")
-    public SingleResponse<BoardResponseDto> boardWrite(@RequestBody @Valid SaveRequestDto saveRequestDto) {
+    public SingleResponse<Board> boardWrite(@RequestBody @Valid SaveRequestDto saveRequestDto) {
         Board board = boardService.write(saveRequestDto);
-        BoardResponseDto boardResponseDto = BoardResponseDto.from(board);
-        return responseService.getSingleResponse(boardResponseDto);
+        return responseService.getSingleResponse(board);
 
     }
     @GetMapping("/{id}")
-    public SingleResponse<BoardResponseDto> boardRead(@PathVariable Long id) throws InvalidateBoardException {
-        BoardResponseDto responseDto = BoardResponseDto.from(boardService.find(id));
-        return responseService.getSingleResponse(responseDto);
+    public SingleResponse<Board> boardRead(@PathVariable Long id) throws InvalidateBoardException {
+        return responseService.getSingleResponse(boardService.find(id));
     }
 
     @GetMapping("/find-all")
@@ -47,15 +45,13 @@ public class BoardController {
     @GetMapping()
     public ListResponse<Board> search(@RequestParam("keyword") String keyword) {
         return responseService.getListResponse(boardService.searchFind(keyword));
-
     }
 
     @PatchMapping("/{id}")
     public SingleResponse boardModify(@PathVariable("id") Long id,
                                         @RequestBody @Valid ModifyRequestDto modifyRequestDto) throws InvalidateBoardException {
         Board board = boardService.modify(id,modifyRequestDto);
-        BoardResponseDto boardResponseDto = BoardResponseDto.from(board);
-        return responseService.getSingleResponse(boardResponseDto);
+        return responseService.getSingleResponse(board);
     }
 
     @DeleteMapping("/{id}")
