@@ -67,4 +67,8 @@ public class BoardService {
         boardRepository.deleteById(id);
     }
 
+    public void deleteAll() {
+        boardRepository.deleteAll();
+    }
+
 }
