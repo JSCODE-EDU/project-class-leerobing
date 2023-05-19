@@ -62,7 +62,7 @@ public class BoardService {
 
     @Transactional
     public void delete(Long id) throws InvalidateBoardException {
-        Board board = boardRepository.findById(id)
+        boardRepository.findById(id)
                 .orElseThrow(() -> new InvalidateBoardException());
         boardRepository.deleteById(id);
     }
