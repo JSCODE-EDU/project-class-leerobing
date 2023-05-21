@@ -47,7 +47,6 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 전에 넣음
 
-
         return http.build();
     }
 
