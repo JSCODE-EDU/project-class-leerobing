@@ -21,4 +21,10 @@ public class ExceptionController {
         return responseService.getErrorResponse(Exception.INVALIDATE_BOARD.getCode(), Exception.INVALIDATE_BOARD.getMessage());
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private CommonResponse inValidateBoardException(IllegalArgumentException e) {
+        return responseService.getErrorResponse(Exception.INVALIDATE_LOGIN.getCode(), Exception.INVALIDATE_LOGIN.getMessage());
+    }
+
 }
