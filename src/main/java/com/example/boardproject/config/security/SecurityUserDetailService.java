@@ -1,7 +1,8 @@
-package com.example.boardproject.common;
+package com.example.boardproject.config.security;
 
 import java.util.Optional;
 
+import com.example.boardproject.config.security.SecurityUser;
 import com.example.boardproject.domain.Member;
 import com.example.boardproject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

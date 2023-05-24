@@ -1,4 +1,4 @@
-package com.example.boardproject.common;
+package com.example.boardproject.config.security;
 
 import java.util.Base64;
 import java.util.Date;
@@ -22,12 +22,12 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class JwtTokenProvider {
 
+    private final UserDetailsService userDetailsService;
+
     private String secretKey = "test";
 
     // 토큰 유효시간 30분
     private long tokenValidTime = 30 * 60 * 1000L;
-
-    private final UserDetailsService userDetailsService;
 
     // 객체 초기화, secretKey를 Base64로 인코딩
     protected void init() {
@@ -41,8 +41,8 @@ public class JwtTokenProvider {
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
+                .setIssuedAt(now) // 오늘 날짜
+                .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time 토큰 유효시간
                 .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과 signature에 들어갈 secret 값 세팅
                 .compact();
     }
@@ -58,15 +58,15 @@ public class JwtTokenProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    // Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN": "TOKEN 값"
+    // Request의 Header에서 token 값을 가져옵니다. "TOKEN": "TOKEN 값"
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+        return request.getHeader("TOKEN");
     }
 
     // 토큰의 유효성 + 만료일자 확인
-    public boolean validateToken(String jwtToken) {
+    public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (java.lang.Exception e) {
             return false;

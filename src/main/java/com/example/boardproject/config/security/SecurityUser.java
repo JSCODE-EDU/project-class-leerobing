@@ -1,8 +1,10 @@
-package com.example.boardproject.common;
+package com.example.boardproject.config.security;
 import com.example.boardproject.domain.Member;
+import lombok.Getter;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
+@Getter
 public class SecurityUser extends User {
     private Member member;
 
@@ -12,7 +14,5 @@ public class SecurityUser extends User {
         this.member = member;
     }
 
-    public Member getMember() {
-        return member;
-    }
+
 }
