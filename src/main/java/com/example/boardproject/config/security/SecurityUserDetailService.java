@@ -2,11 +2,10 @@ package com.example.boardproject.config.security;
 
 import java.util.Optional;
 
+import com.example.boardproject.config.security.SecurityUser;
 import com.example.boardproject.domain.Member;
 import com.example.boardproject.repository.MemberRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
