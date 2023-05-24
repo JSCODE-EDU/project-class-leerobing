@@ -11,7 +11,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc              // spring-security와 연결할 때 이 부분이 없으면 404에러가 뜬다.
 @EnableSwagger2            // 기능을 활성화하는 어노테이션입니다.
 public class SwaggerConfig implements WebMvcConfigurer {
-    
 
     /**
      * Swagger2 버전은 http://localhost:8080/swagger-ui.html

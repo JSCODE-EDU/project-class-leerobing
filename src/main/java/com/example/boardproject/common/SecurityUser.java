@@ -1,4 +1,4 @@
-package com.example.boardproject.config.security;
+package com.example.boardproject.common;
 import com.example.boardproject.domain.Member;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;

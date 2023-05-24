@@ -1,4 +1,4 @@
-package com.example.boardproject.config.security;
+package com.example.boardproject.common;
 
 import java.util.Base64;
 import java.util.Date;
@@ -68,9 +68,8 @@ public class JwtTokenProvider {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return !claims.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
+        } catch (java.lang.Exception e) {
             return false;
         }
     }
-
 }

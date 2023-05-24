@@ -1,5 +1,7 @@
 package com.example.boardproject.config.security;
 
+import com.example.boardproject.common.JwtAuthenticationFilter;
+import com.example.boardproject.common.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -41,7 +43,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests() // 요청에 대한 사용 권한 체크
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/api/post/**").authenticated()
+                .antMatchers("/board/write").authenticated()
                 .anyRequest().permitAll() // 그외 나머지 요청은 누구나 접근 가능
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

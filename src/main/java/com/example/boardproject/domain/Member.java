@@ -24,7 +24,7 @@ import lombok.ToString;
 @Builder
 public class Member extends BaseTimeEntity {
     @Id
-    @Column(name = "member_id", columnDefinition = "BINARY(16)")
+    @Column(name = "member_id")
     @GeneratedValue
     private UUID id;
 

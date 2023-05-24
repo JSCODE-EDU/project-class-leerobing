@@ -2,7 +2,7 @@ package com.example.boardproject.controller;
 import java.util.Map;
 import java.util.UUID;
 
-import com.example.boardproject.config.security.JwtTokenProvider;
+import com.example.boardproject.common.JwtTokenProvider;
 import com.example.boardproject.domain.Member;
 import com.example.boardproject.domain.Role;
 import com.example.boardproject.repository.MemberRepository;
