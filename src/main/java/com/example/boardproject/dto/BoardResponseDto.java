@@ -16,15 +16,15 @@ public class BoardResponseDto {
     private Member member;
 
     @Builder
-    private BoardResponseDto(Long id, String title, String content,Member member) {
+    private BoardResponseDto(Long id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.member = member;
+
             }
 
     public static BoardResponseDto from(Board board) {
-        return new BoardResponseDto(board.getId(),board.getTitle(),board.getContent(),board.getMember());
+        return new BoardResponseDto(board.getId(),board.getTitle(),board.getContent());
     }
 
 

@@ -1,38 +1,33 @@
 package com.example.boardproject.domain;
 
-import lombok.*;
+
+import com.example.boardproject.dto.CommentDto;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
 @Entity
-@ToString
-public class Comment extends BaseTimeEntity{
-
+@Getter
+@Setter
+public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT",nullable = false)
-    private String comment;
+    @Column
+    private String commentContents;
 
-    private LocalDateTime createdDate;
-
-    private LocalDateTime modifiedDate;
-
-    @ManyToOne
+    /* Board:Comment = 1:N */
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
 
-
-
+    public static Comment toSaveEntity(CommentDto commentDto, Board board) {
+        Comment comment = new Comment();
+        comment.setCommentContents(commentDto.getCommentContents());
+        comment.setBoard(board);
+        return comment;
+    }
 }

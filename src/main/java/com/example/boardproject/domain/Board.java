@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,9 +26,10 @@ public class Board extends BaseTimeEntity {
 
     private LocalDateTime createdDate;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Comment> commentList = new ArrayList<>();
+
 
 
 
@@ -36,7 +38,6 @@ public class Board extends BaseTimeEntity {
         this.title = title;
         this.content = content;
         this.createdDate = LocalDateTime.now();
-        this.member = member;
     }
 
     public void modify(String title, String content) {
