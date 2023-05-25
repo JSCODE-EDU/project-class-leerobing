@@ -2,6 +2,7 @@ package com.example.boardproject.controller;
 
 import com.example.boardproject.common.Exception;
 import com.example.boardproject.domain.Board;
+import com.example.boardproject.domain.Member;
 import com.example.boardproject.dto.BoardResponseDto;
 import com.example.boardproject.dto.ModifyRequestDto;
 import com.example.boardproject.dto.SaveRequestDto;

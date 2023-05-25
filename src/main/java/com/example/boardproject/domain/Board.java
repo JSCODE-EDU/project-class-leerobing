@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,13 +25,18 @@ public class Board extends BaseTimeEntity {
 
     private LocalDateTime createdDate;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+
 
     @Builder
-    public  Board(String title, String content,LocalDateTime createdDate) {
+    public  Board(String title, String content,LocalDateTime createdDate,Member member) {
         this.title = title;
         this.content = content;
         this.createdDate = LocalDateTime.now();
-
+        this.member = member;
     }
 
     public void modify(String title, String content) {

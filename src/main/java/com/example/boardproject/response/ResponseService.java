@@ -25,7 +25,6 @@ public class ResponseService {
 
     public CommonResponse getErrorResponse(int code, String message) {
         return CommonResponse.of(false,code,message);
-
     }
 
     void setSuccessResponse(CommonResponse commonResponse) {

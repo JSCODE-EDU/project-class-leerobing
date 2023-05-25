@@ -27,6 +27,7 @@ public class BoardService {
             Board board = Board.builder()
                     .title(saveRequestDto.getTitle())
                     .content(saveRequestDto.getContent())
+                    .member(saveRequestDto.getMember())
                     .build();
         boardRepository.save(board);
         return board;

@@ -31,7 +31,7 @@ public class MemberController {
             @ApiResponse(code = 500,message = "서버 내부 오류입니다. 관리자에게 문의바랍니다.")
     })
     @PostMapping("/join")
-    public ResponseEntity<UUID> register(@RequestBody Map<String, String> user) {
+    public ResponseEntity<Long> register(@RequestBody Map<String, String> user) {
         return ResponseEntity.ok().body(memberService.join(user));
     }
 
