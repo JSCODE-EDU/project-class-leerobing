@@ -1,12 +1,11 @@
 package com.example.boardproject.dto;
 
-import com.example.boardproject.domain.Comment;
-import com.example.boardproject.domain.Member;
+
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
+
 
 @Getter
 public class SaveRequestDto {

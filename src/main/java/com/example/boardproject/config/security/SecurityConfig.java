@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST,"/board/write").authenticated()
                 .antMatchers(HttpMethod.PATCH,"/board/{id}").authenticated()
+                .antMatchers(HttpMethod.POST,"/board/comment/{id}/{email}").authenticated()
                 .anyRequest().permitAll() // 그외 나머지 요청은 누구나 접근 가능
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

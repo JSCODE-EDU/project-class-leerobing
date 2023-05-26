@@ -32,7 +32,6 @@ public class Board extends BaseTimeEntity {
 
 
 
-
     @Builder
     public  Board(String title, String content,LocalDateTime createdDate,Member member) {
         this.title = title;
