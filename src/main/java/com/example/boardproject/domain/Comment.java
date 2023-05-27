@@ -2,6 +2,7 @@ package com.example.boardproject.domain;
 
 
 import com.example.boardproject.dto.CommentDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,11 +22,13 @@ public class Comment extends BaseTimeEntity {
     @Column
     private String nickname;
 
+    @JsonIgnore
     /* Board:Comment = 1:N */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

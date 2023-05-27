@@ -1,5 +1,6 @@
 package com.example.boardproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,9 @@ public class Board extends BaseTimeEntity {
     private LocalDateTime createdDate;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
-
 
 
     @Builder

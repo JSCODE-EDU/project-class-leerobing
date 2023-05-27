@@ -6,6 +6,8 @@ import com.example.boardproject.domain.Comment;
 import com.example.boardproject.domain.Member;
 import com.example.boardproject.dto.CommentDto;
 import com.example.boardproject.repository.MemberRepository;
+import com.example.boardproject.response.ListResponse;
+import com.example.boardproject.response.ResponseService;
 import com.example.boardproject.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
     private final CommentService commentService;
-    private final MemberRepository memberRepository;
 
     @PostMapping("/comment/{id}/{email}")
     public Long createComment(@RequestBody CommentDto commentDto,
@@ -25,5 +26,6 @@ public class CommentController {
 
         return commentService.save(CommentDto.toCommentDto(commentDto,boardId,email));
     }
+
 
 }
