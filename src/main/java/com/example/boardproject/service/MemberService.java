@@ -18,9 +18,8 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    //회원가입
-    public UUID join(Map<String,String> user) {
-        UUID id = memberRepository.save(Member.builder()
+    public Long join(Map<String,String> user) {
+        Long id = memberRepository.save(Member.builder()
                         .email(user.get("email"))
                         .password(passwordEncoder.encode(user.get("password")))
                         .nickname(user.get("nickname"))
@@ -28,7 +27,7 @@ public class MemberService {
                         .role(Role.ROLE_MEMBER).build()).getId();
         return id;
     }
-    //로그인
+
     public String login(Map<String, String> user) {
         Member member = memberRepository.findByEmail(user.get("email"))
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일 입니다."));

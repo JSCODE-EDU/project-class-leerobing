@@ -1,13 +1,11 @@
 package com.example.boardproject.domain;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,9 +22,8 @@ import lombok.ToString;
 @Builder
 public class Member extends BaseTimeEntity {
     @Id
-    @Column(name = "member_id")
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(length = 100, unique = true, nullable = false)
     private String email;
@@ -39,5 +36,11 @@ public class Member extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Comment> commentList = new ArrayList<>();
+
+
 
 }

@@ -15,6 +15,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("select p from Board p where p.title like %:keyword%")
     List<Board> findByTitleKeyword(@Param("keyword") String keyword, Pageable pageable);
 
-    @Query("select p from Board  p")
+    @Query("select p from Board p")
     List<Board> findFirst100ByBoard(Pageable pageable);
 }

@@ -1,11 +1,14 @@
 package com.example.boardproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,12 +28,16 @@ public class Board extends BaseTimeEntity {
     private LocalDateTime createdDate;
 
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Comment> commentList = new ArrayList<>();
+
+
     @Builder
-    public  Board(String title, String content,LocalDateTime createdDate) {
+    public  Board(String title, String content,LocalDateTime createdDate,Member member) {
         this.title = title;
         this.content = content;
         this.createdDate = LocalDateTime.now();
-
     }
 
     public void modify(String title, String content) {
